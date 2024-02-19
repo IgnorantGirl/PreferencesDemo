@@ -5,8 +5,10 @@ import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.content.contentValuesOf
 import com.hui.preferencesdemo.databinding.ActivitySqliteBinding
 import tools.MyDatabaseHelper
+import tools.cvOf
 
 class SQLiteActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySqliteBinding
@@ -42,7 +44,18 @@ class SQLiteActivity : AppCompatActivity() {
                 put("pages", 510)
                 put("price", 19.95)
             }
+
             db.insert("Book", null, values2) // 插入第二条数据
+
+            // 使用封装好的方法  插入数据
+            val values3 = cvOf("name" to "The Da ","author" to
+                    "George ","pages" to 328, "price" to 10.90)
+            db.insert("Book", null, values3) // 插入第三条数据
+
+            // 使用ktx库中提供的contentValuesOf方法
+            val values4 = contentValuesOf("name" to "Game of Thrones", "author" to "George Martin",
+                "pages" to 720, "price" to 20.85)
+            db.insert("Book", null, values4)
         }
 
         binding.updateData.setOnClickListener {
